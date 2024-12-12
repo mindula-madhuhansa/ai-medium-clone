@@ -34,4 +34,6 @@ PostSchema.pre("save", function (next) {
   next();
 });
 
-export default mongoose.model<IPost>("Post", PostSchema);
+const Post = mongoose.models.User || mongoose.model<IPost>("Post", PostSchema);
+
+export default Post;
