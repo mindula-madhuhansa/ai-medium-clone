@@ -21,7 +21,7 @@ const Header = () => {
         </Link>
 
         <Link
-          href="/new"
+          href="/new-post"
           className="flex items-center space-x-2 text-muted-foreground hover:text-black transition-colors"
         >
           <EditIcon className="size-5" />

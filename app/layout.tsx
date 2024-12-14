@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import { auth } from "@clerk/nextjs/server";
 import { Noto_Sans } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import "./globals.css";
-import { Header } from "@/components/header";
-import { RootHeader } from "@/components/root-header";
 
 const notoSans = Noto_Sans({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -22,30 +19,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { sessionId } = await auth();
-
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${notoSans.className} antialiased`}>
-          <div
-            className={`flex flex-col h-screen ${
-              sessionId ? "bg-gray-100" : "bg-orange-50"
-            }`}
-          >
-            {sessionId ? (
-              <Header />
-            ) : (
-              <div className="border-b border-black">
-                <RootHeader />
-              </div>
-            )}
-
-            <main className="flex-1 w-full p-4 max-w-6xl mx-auto">
-              {children}
-            </main>
-          </div>
-        </body>
+        <body className={`${notoSans.className} antialiased`}>{children}</body>
       </html>
     </ClerkProvider>
   );

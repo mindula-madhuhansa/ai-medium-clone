@@ -15,17 +15,19 @@ const RootHeader = () => {
       <h1 className="text-2xl lg:text-4xl font-serif font-bold">Scribe</h1>
 
       <div className="flex items-center space-x-5">
-        <Link href="/new">Write</Link>
+        <Link href="/new-post" prefetch={false}>
+          Write
+        </Link>
 
         <ClerkLoading>
           <Loader2Icon className="size-8 animate-spin" />
         </ClerkLoading>
 
         <ClerkLoaded>
-          <SignInButton mode="modal" />
+          <SignInButton />
 
           <Button asChild className="text-sm px-4 py-3 rounded-full">
-            <SignUpButton mode="modal" />
+            <SignUpButton />
           </Button>
         </ClerkLoaded>
       </div>
