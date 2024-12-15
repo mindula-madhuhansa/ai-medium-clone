@@ -1,6 +1,6 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
 
-import { Landing } from "@/components/landing";
+import Landing from "@/components/landing";
 import { saveNewUser } from "@/services/userServices";
 
 export default async function Home() {

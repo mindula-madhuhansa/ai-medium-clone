@@ -1,7 +1,7 @@
-interface News {
-  headline: string;
-  lead_sentence: string;
-  details: string;
-  image_prompt: string;
-  image_url?: string;
+interface Post {
+  title: string;
+  shortDescription: string;
+  content: string;
+  imagePrompt: string;
+  imageUrl?: string;
 }

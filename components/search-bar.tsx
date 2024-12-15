@@ -8,10 +8,10 @@ const SearchBar = () => {
       <SearchIcon className="size-6 text-muted-foreground" />
       <Input
         placeholder="Search"
-        className="bg-transparent shadow-none border-none focus-visible:ring-0 focus-visible:outline-none"
+        className="shadow-none border-none focus-visible:ring-0 focus-visible:outline-none"
       />
     </div>
   );
 };
 
-export { SearchBar };
+export default SearchBar;

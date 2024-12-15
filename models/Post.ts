@@ -7,6 +7,7 @@ export interface IPost extends Document {
   slug: string;
   shortDescription: string;
   content: string;
+  imageUrl?: string;
 }
 
 const PostSchema: Schema = new Schema(
@@ -16,6 +17,7 @@ const PostSchema: Schema = new Schema(
     slug: { type: String, unique: true },
     shortDescription: { type: String, required: true },
     content: { type: String, required: true },
+    imageUrl: { type: String },
   },
   { timestamps: true }
 );
@@ -34,6 +36,6 @@ PostSchema.pre("save", function (next) {
   next();
 });
 
-const Post = mongoose.models.User || mongoose.model<IPost>("Post", PostSchema);
+const Post = mongoose.models.Post || mongoose.model<IPost>("Post", PostSchema);
 
 export default Post;

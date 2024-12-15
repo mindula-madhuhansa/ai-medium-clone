@@ -3,7 +3,7 @@ import { User as TypeUser } from "@clerk/nextjs/server";
 import User from "@/models/User";
 import connectDB from "@/lib/mongodb";
 
-export const saveNewUser = async (user: TypeUser) => {
+export async function saveNewUser(user: TypeUser) {
   await connectDB();
 
   let existingUser = await User.findOne({
@@ -14,9 +14,22 @@ export const saveNewUser = async (user: TypeUser) => {
     existingUser = new User({
       name: user.fullName,
       email: user.primaryEmailAddress?.emailAddress,
-      profilePicture: user.imageUrl,
+      profilePicture: user.imageUrl || "",
     });
 
     await existingUser.save();
   }
-};
+}
+
+export async function getUserByEmail(email: string) {
+  await connectDB();
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    console.error("User not found");
+    return;
+  }
+
+  return user;
+}

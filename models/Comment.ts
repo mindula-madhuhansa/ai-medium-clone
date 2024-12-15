@@ -16,6 +16,6 @@ const CommentSchema: Schema = new Schema(
 );
 
 const Comment =
-  mongoose.models.User || mongoose.model<IComment>("Comment", CommentSchema);
+  mongoose.models.Comment || mongoose.model<IComment>("Comment", CommentSchema);
 
 export default Comment;
