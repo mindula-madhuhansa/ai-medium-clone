@@ -15,6 +15,7 @@ export async function uploadImage(url: string) {
     return;
   }
 
+  console.log("URL: ", url);
   const response = await utapi.uploadFilesFromUrl(url);
 
   return response.data?.url;

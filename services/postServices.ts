@@ -26,9 +26,48 @@ export async function savePost(post: Post) {
   });
 
   try {
-    await newPost.save();
+    const savedPost = await newPost.save();
+
+    const post = JSON.parse(JSON.stringify(savedPost));
+    return post;
   } catch (error) {
     console.error("Error saving post:", error);
+    return;
+  }
+}
+
+export async function getPostById(id: string) {
+  await connectDB();
+
+  try {
+    const post = await Post.findById(id);
+
+    if (!post) {
+      console.error("Post not found");
+      return;
+    }
+
+    return JSON.parse(JSON.stringify(post));
+  } catch (error) {
+    console.error("Error getting post by id:", error);
+    return;
+  }
+}
+
+export async function deletePost(id: string) {
+  await connectDB();
+
+  try {
+    const post = await Post.findByIdAndDelete(id);
+
+    if (!post) {
+      console.error("Post not found");
+      return;
+    }
+
+    return JSON.parse(JSON.stringify(post));
+  } catch (error) {
+    console.error("Error deleting post:", error);
     return;
   }
 }

@@ -16,7 +16,7 @@ export async function generatePost(prompt: string) {
   const imageUrl = await generateImage(post.imagePrompt);
   post.imageUrl = imageUrl;
 
-  await savePost(post);
+  const postDoc = await savePost(post);
 
-  return post;
+  return postDoc;
 }

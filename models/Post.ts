@@ -8,6 +8,7 @@ export interface IPost extends Document {
   shortDescription: string;
   content: string;
   imageUrl?: string;
+  status: "draft" | "published";
 }
 
 const PostSchema: Schema = new Schema(
@@ -18,6 +19,11 @@ const PostSchema: Schema = new Schema(
     shortDescription: { type: String, required: true },
     content: { type: String, required: true },
     imageUrl: { type: String },
+    status: {
+      type: String,
+      enum: ["draft", "published"],
+      default: "draft",
+    },
   },
   { timestamps: true }
 );
@@ -32,6 +38,10 @@ PostSchema.statics.paginate = async function (filter, options) {
 };
 
 PostSchema.pre("save", function (next) {
+  if (!this.status) {
+    this.status = "draft";
+  }
+
   this.slug = slugify(this.title as string, { lower: true, strict: true });
   next();
 });
