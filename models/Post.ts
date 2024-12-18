@@ -7,6 +7,7 @@ export interface IPost extends Document {
   slug: string;
   shortDescription: string;
   content: string;
+  imagePrompt?: string;
   imageUrl?: string;
   status: "draft" | "published";
 }
@@ -18,6 +19,7 @@ const PostSchema: Schema = new Schema(
     slug: { type: String, unique: true },
     shortDescription: { type: String, required: true },
     content: { type: String, required: true },
+    imagePrompt: { type: String },
     imageUrl: { type: String },
     status: {
       type: String,

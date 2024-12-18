@@ -22,6 +22,7 @@ export async function savePost(post: Post) {
     title: post.title,
     shortDescription: post.shortDescription,
     content: post.content,
+    imagePrompt: post.imagePrompt,
     imageUrl: post.imageUrl,
   });
 
@@ -50,6 +51,23 @@ export async function getPostById(id: string) {
     return JSON.parse(JSON.stringify(post));
   } catch (error) {
     console.error("Error getting post by id:", error);
+    return;
+  }
+}
+
+export async function getAllPosts() {
+  await connectDB();
+
+  try {
+    const posts = await Post.find({
+      status: "published",
+    })
+      .populate("authorId", { email: 1 })
+      .sort({ createdAt: -1 });
+
+    return JSON.parse(JSON.stringify(posts));
+  } catch (error) {
+    console.error("Error getting all posts:", error);
     return;
   }
 }

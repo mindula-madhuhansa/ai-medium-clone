@@ -3,12 +3,11 @@
 import Image from "next/image";
 import { useState } from "react";
 
-import { IPost } from "@/models/Post";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-const PostEditor = ({ post }: { post: Partial<IPost> }) => {
+const PostEditor = ({ post }: { post: PostDoc }) => {
   const [title, setTitle] = useState(post.title);
   const [shortDescription, setShortDescription] = useState(
     post.shortDescription
