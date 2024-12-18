@@ -59,16 +59,14 @@ export async function getAllPosts() {
   await connectDB();
 
   try {
-    const posts = await Post.find({
-      status: "published",
-    })
-      .populate("authorId", { email: 1 })
+    const posts = await Post.find({ status: "published" })
+      .populate("authorId", "name profilePicture") // Populate `authorId` with `name` and `profilePicture`
       .sort({ createdAt: -1 });
 
     return JSON.parse(JSON.stringify(posts));
   } catch (error) {
     console.error("Error getting all posts:", error);
-    return;
+    return [];
   }
 }
 

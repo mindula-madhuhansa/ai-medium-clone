@@ -1,6 +1,7 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
 
 import Landing from "@/components/landing";
+import PostItem from "@/components/post-item";
 import { saveNewUser } from "@/services/userServices";
 import { getAllPosts } from "@/services/postServices";
 
@@ -14,19 +15,18 @@ export default async function Home() {
 
   await saveNewUser(user);
 
-  const posts = await getAllPosts();
+  const posts: PostDoc[] = await getAllPosts();
 
-  if (!posts) {
+  if (posts.length === 0) {
     return <div className="">No posts found</div>;
   }
 
   return (
     <div className="">
-      {posts.map((post) => (
-        <div key={post._id} className="">
-          <h2>{post.title}</h2>
-          <p>{post.shortDescription}</p>
-          <img src={post.imageUrl} alt={post.title} />
+      {posts.map((post: PostDoc) => (
+        <div key={post._id}>
+          <PostItem post={post} />
+          <div className="border-t border-zinc-300 my-8" />
         </div>
       ))}
     </div>

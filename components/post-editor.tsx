@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { CircleCheckIcon, PencilLineIcon } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 
 const PostEditor = ({ post }: { post: PostDoc }) => {
@@ -19,14 +21,30 @@ const PostEditor = ({ post }: { post: PostDoc }) => {
   }
 
   return (
-    <div className="flex flex-col p-5 lg:p-10">
+    <div className="flex flex-col">
+      <div className="flex justify-end mb-6">
+        {post.status === "published" ? (
+          <Badge
+            variant="outline"
+            className="rounded-full px-4 py-2 space-x-2 bg-green-500"
+          >
+            <CircleCheckIcon className="size-4" />
+            <span>Published</span>
+          </Badge>
+        ) : (
+          <Badge variant="outline" className="rounded-full px-4 py-2 space-x-3">
+            <PencilLineIcon className="size-4" />
+            <span>Draft</span>
+          </Badge>
+        )}
+      </div>
       {post.imageUrl && (
         <Image
           src={post.imageUrl}
           alt={post.title as string}
           width={1920}
           height={1080}
-          className="rounded-lg max-w-2xl h-auto mx-auto"
+          className="rounded-lg w-96 lg:w-[720px] h-auto mx-auto"
         />
       )}
 
