@@ -13,11 +13,10 @@ export default async function PostPage({
 }) {
   const { id } = await searchParams;
   const post: PostDoc = await getPostById(id);
-  console.log(post.content);
 
   return (
-    <div className="mt-12 max-w-3xl mx-auto">
-      <h1 className="text-4xl font-bold">{post.title}</h1>
+    <div className="mt-6 max-w-3xl mx-auto">
+      <h2 className="text-4xl font-bold">{post.title}</h2>
       <h3 className="mt-4 text-lg text-zinc-600 font-medium">
         {post.shortDescription}
       </h3>
@@ -28,6 +27,7 @@ export default async function PostPage({
             src={
               post.authorId.profilePicture || "https://github.com/shadcn.png"
             }
+            className="size-8"
           />
           <p>{post.authorId.name}</p>
         </div>
@@ -54,19 +54,19 @@ export default async function PostPage({
         ))}
       </div>
 
-      <div className="flex items-center justify-end gap-6 text-zinc-600 text-sm my-12">
+      <div className="flex items-center gap-6 text-zinc-600 text-sm my-12">
         <div className="flex items-center gap-2">
-          <HeartIcon className="size-4" />
+          <HeartIcon className="size-5" />
           <p>0</p>
         </div>
 
         <div className="flex items-center gap-2">
-          <MessageCircleIcon className="size-4" />
+          <MessageCircleIcon className="size-5" />
           <p>0</p>
         </div>
 
         <div className="flex items-center gap-2">
-          <ShareIcon className="size-4" />
+          <ShareIcon className="size-5" />
         </div>
       </div>
 

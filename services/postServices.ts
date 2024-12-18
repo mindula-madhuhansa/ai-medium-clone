@@ -58,6 +58,36 @@ export async function getPostById(id: string) {
   }
 }
 
+export async function getDraftPosts(authorId: string) {
+  await connectDB();
+
+  try {
+    const posts = await Post.find({ authorId, status: "draft" })
+      .populate("authorId", "name profilePicture")
+      .sort({ createdAt: -1 });
+
+    return JSON.parse(JSON.stringify(posts));
+  } catch (error) {
+    console.error("Error getting draft posts:", error);
+    return [];
+  }
+}
+
+export async function getPublishedPosts(authorId: string) {
+  await connectDB();
+
+  try {
+    const posts = await Post.find({ authorId, status: "published" })
+      .populate("authorId", "name profilePicture")
+      .sort({ createdAt: -1 });
+
+    return JSON.parse(JSON.stringify(posts));
+  } catch (error) {
+    console.error("Error getting published posts:", error);
+    return [];
+  }
+}
+
 export async function getAllPosts() {
   await connectDB();
 

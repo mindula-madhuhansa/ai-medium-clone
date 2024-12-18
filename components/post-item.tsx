@@ -11,8 +11,9 @@ const PostItem = ({ post }: { post: PostDoc }) => {
       <div className="flex items-center gap-2 mb-4">
         <UserAvatar
           src={post.authorId.profilePicture || "https://github.com/shadcn.png"}
+          className="size-6"
         />
-        <p className="text-sm">{post.authorId.name}</p>
+        <p className="text-xs font-medium">{post.authorId.name}</p>
       </div>
 
       <div className="flex justify-between max-w-3xl">
