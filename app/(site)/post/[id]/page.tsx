@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import { HeartIcon, MessageCircleIcon, ShareIcon } from "lucide-react";
 
 import { formatDate } from "@/lib/utils";
@@ -13,6 +14,10 @@ export default async function PostPage({
 }) {
   const { id } = await searchParams;
   const post: PostDoc = await getPostById(id);
+
+  if (post.status !== "published") {
+    return redirect("/");
+  }
 
   return (
     <div className="mt-6 max-w-3xl mx-auto">

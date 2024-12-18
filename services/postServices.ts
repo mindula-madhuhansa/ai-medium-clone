@@ -37,6 +37,42 @@ export async function savePost(post: Post) {
   }
 }
 
+export async function updatePostStatus(id: string, status: string) {
+  await connectDB();
+
+  try {
+    const post = await Post.findByIdAndUpdate(id, { status }, { new: true });
+
+    if (!post) {
+      console.error("Post not found");
+      return;
+    }
+
+    return JSON.parse(JSON.stringify(post));
+  } catch (error) {
+    console.error("Error updating post status:", error);
+    return;
+  }
+}
+
+export async function deletePost(id: string) {
+  await connectDB();
+
+  try {
+    const post = await Post.findByIdAndDelete(id);
+
+    if (!post) {
+      console.error("Post not found");
+      return;
+    }
+
+    return JSON.parse(JSON.stringify(post));
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    return;
+  }
+}
+
 export async function getPostById(id: string) {
   await connectDB();
 
@@ -100,41 +136,5 @@ export async function getAllPosts() {
   } catch (error) {
     console.error("Error getting all posts:", error);
     return [];
-  }
-}
-
-export async function deletePost(id: string) {
-  await connectDB();
-
-  try {
-    const post = await Post.findByIdAndDelete(id);
-
-    if (!post) {
-      console.error("Post not found");
-      return;
-    }
-
-    return JSON.parse(JSON.stringify(post));
-  } catch (error) {
-    console.error("Error deleting post:", error);
-    return;
-  }
-}
-
-export async function updatePostStatus(id: string, status: string) {
-  await connectDB();
-
-  try {
-    const post = await Post.findByIdAndUpdate(id, { status }, { new: true });
-
-    if (!post) {
-      console.error("Post not found");
-      return;
-    }
-
-    return JSON.parse(JSON.stringify(post));
-  } catch (error) {
-    console.error("Error updating post status:", error);
-    return;
   }
 }

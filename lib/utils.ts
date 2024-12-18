@@ -8,7 +8,8 @@ export function cn(...inputs: ClassValue[]) {
 
 export function formatJson(input: string) {
   const cleanedInput = input.replace(/```json|```/g, "").trim();
-  return JSON.parse(cleanedInput);
+  const sanitizedInput = cleanedInput.replace(/[\x00-\x1F\x7F-\x9F]/g, "");
+  return JSON.parse(sanitizedInput);
 }
 
 export function formatDate(date: string) {

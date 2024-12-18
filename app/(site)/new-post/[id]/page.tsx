@@ -41,7 +41,7 @@ export default async function EditPostPage({
           }}
         >
           <Button className="bg-green-500 hover:bg-green-500/90">
-            Publish
+            {post.status === "published" ? "Save & Publish" : "Publish"}
           </Button>
         </form>
       </div>

@@ -1,6 +1,7 @@
 import moment from "moment";
 
 import { TabsContent } from "@/components/ui/tabs";
+import Link from "next/link";
 
 const TabContent = ({ value, items }: { value: string; items: PostDoc[] }) => {
   return (
@@ -16,7 +17,13 @@ const TabContent = ({ value, items }: { value: string; items: PostDoc[] }) => {
       ) : (
         <>
           {items.map((item) => (
-            <div
+            <Link
+              href={
+                value === "published"
+                  ? `/post/${item.slug}?id=${item._id}`
+                  : `/new-post/${item._id}`
+              }
+              passHref
               key={item._id}
               className="mt-4 px-8 pt-6 pb-2 flex flex-col gap-1"
             >
@@ -28,7 +35,7 @@ const TabContent = ({ value, items }: { value: string; items: PostDoc[] }) => {
                 {value === "drafts" ? "Saved" : "Published"}{" "}
                 {moment(item.createdAt).fromNow()}
               </p>
-            </div>
+            </Link>
           ))}
         </>
       )}
