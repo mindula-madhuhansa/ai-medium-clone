@@ -41,7 +41,10 @@ export async function getPostById(id: string) {
   await connectDB();
 
   try {
-    const post = await Post.findById(id);
+    const post = await Post.findById(id).populate(
+      "authorId",
+      "name profilePicture"
+    );
 
     if (!post) {
       console.error("Post not found");
@@ -60,7 +63,7 @@ export async function getAllPosts() {
 
   try {
     const posts = await Post.find({ status: "published" })
-      .populate("authorId", "name profilePicture") // Populate `authorId` with `name` and `profilePicture`
+      .populate("authorId", "name profilePicture")
       .sort({ createdAt: -1 });
 
     return JSON.parse(JSON.stringify(posts));

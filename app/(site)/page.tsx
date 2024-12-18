@@ -22,7 +22,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="">
+    <div>
       {posts.map((post: PostDoc) => (
         <div key={post._id}>
           <PostItem post={post} />

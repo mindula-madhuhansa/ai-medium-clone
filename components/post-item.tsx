@@ -3,22 +3,15 @@ import Image from "next/image";
 import { HeartIcon, MessageCircleIcon } from "lucide-react";
 
 import { formatDate } from "@/lib/utils";
+import UserAvatar from "@/components/user-avatar";
 
 const PostItem = ({ post }: { post: PostDoc }) => {
   return (
-    <Link href={`/post/${post._id}`} passHref>
+    <Link href={`/post/${post.slug}?id=${post._id}`} passHref>
       <div className="flex items-center gap-2 mb-4">
-        {post.authorId.profilePicture ? (
-          <Image
-            src={post.authorId.profilePicture}
-            alt={post.authorId.name}
-            width={24}
-            height={24}
-            className="rounded-full object-cover"
-          />
-        ) : (
-          <div className="w-10 h-10 rounded-full bg-gray-200" />
-        )}
+        <UserAvatar
+          src={post.authorId.profilePicture || "https://github.com/shadcn.png"}
+        />
         <p className="text-sm">{post.authorId.name}</p>
       </div>
 

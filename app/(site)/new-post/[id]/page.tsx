@@ -11,7 +11,7 @@ import PostEditor from "@/components/post-editor";
 export default async function EditPostPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
   const post = await getPostById(id);
