@@ -2,41 +2,22 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 import { IPost } from "@/models/Post";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "./ui/label";
-import { deletePost } from "@/services/postServices";
 
 const PostEditor = ({ post }: { post: Partial<IPost> }) => {
-  const router = useRouter();
-
-  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState(post.title);
   const [shortDescription, setShortDescription] = useState(
     post.shortDescription
   );
   const [content, setContent] = useState(post.content);
-  const [status, setStatus] = useState(post.status);
 
   if (!post) {
     return null;
   }
-
-  const handleDiscard = async () => {
-    setLoading(true);
-    try {
-      await deletePost(post._id as string);
-      router.replace("/");
-    } catch (error) {
-      console.error("Error deleting post:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="flex flex-col p-5 lg:p-10">
@@ -83,19 +64,6 @@ const PostEditor = ({ post }: { post: Partial<IPost> }) => {
         onChange={(e) => setContent(e.target.value)}
         className="mt-2 p-4 shadow-none border focus-visible:ring-0 focus-visible:outline-none resize-none min-h-64"
       />
-
-      <div className="flex justify-end w-full mt-6 space-x-4">
-        <Button onClick={handleDiscard} variant="destructive">
-          Discard
-        </Button>
-
-        <Button
-          onClick={() => {}}
-          className="bg-green-500 hover:bg-green-500/90"
-        >
-          Publish
-        </Button>
-      </div>
     </div>
   );
 };

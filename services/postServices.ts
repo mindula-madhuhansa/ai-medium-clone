@@ -71,3 +71,21 @@ export async function deletePost(id: string) {
     return;
   }
 }
+
+export async function updatePostStatus(id: string, status: string) {
+  await connectDB();
+
+  try {
+    const post = await Post.findByIdAndUpdate(id, { status }, { new: true });
+
+    if (!post) {
+      console.error("Post not found");
+      return;
+    }
+
+    return JSON.parse(JSON.stringify(post));
+  } catch (error) {
+    console.error("Error updating post status:", error);
+    return;
+  }
+}
