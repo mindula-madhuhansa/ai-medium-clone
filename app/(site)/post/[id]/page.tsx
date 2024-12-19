@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Markdown from "react-markdown";
 import { redirect } from "next/navigation";
 import { HeartIcon, MessageCircleIcon, ShareIcon } from "lucide-react";
 
@@ -6,6 +7,7 @@ import { formatDate } from "@/lib/utils";
 import UserAvatar from "@/components/user-avatar";
 import CommentBox from "@/components/comment-box";
 import { getPostById } from "@/services/postServices";
+import Link from "next/link";
 
 export default async function PostPage({
   searchParams,
@@ -27,15 +29,13 @@ export default async function PostPage({
       </h3>
 
       <div className="mt-6 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <UserAvatar
-            src={
-              post.authorId.profilePicture || "https://github.com/shadcn.png"
-            }
-            className="size-8"
-          />
+        <Link
+          href={`/dashboard/${post.authorId._id}`}
+          className="flex items-center gap-2 hover:underline"
+        >
+          <UserAvatar src={post.authorId.profilePicture} className="size-8" />
           <p>{post.authorId.name}</p>
-        </div>
+        </Link>
         <p className="text-sm text-zinc-500">{formatDate(post.createdAt)}</p>
       </div>
 
@@ -53,9 +53,9 @@ export default async function PostPage({
 
       <div className="mt-12">
         {post.content.split("\n").map((paragraph, index) => (
-          <p key={index} className="mb-6 text-lg font-serif">
+          <Markdown key={index} className="mb-6 text-lg font-serif">
             {paragraph.trim()}
-          </p>
+          </Markdown>
         ))}
       </div>
 

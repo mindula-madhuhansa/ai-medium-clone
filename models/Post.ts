@@ -30,15 +30,6 @@ const PostSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-PostSchema.statics.paginate = async function (filter, options) {
-  const { page = 1, limit = 10 } = options;
-  const skip = (page - 1) * limit;
-  const posts = await this.find(filter).skip(skip).limit(limit);
-  const total = await this.countDocuments(filter);
-
-  return { posts, total, page, limit };
-};
-
 PostSchema.pre("save", function (next) {
   if (!this.status) {
     this.status = "draft";

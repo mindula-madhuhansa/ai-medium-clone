@@ -17,25 +17,28 @@ const TabContent = ({ value, items }: { value: string; items: PostDoc[] }) => {
       ) : (
         <>
           {items.map((item) => (
-            <Link
-              href={
-                value === "published"
-                  ? `/post/${item.slug}?id=${item._id}`
-                  : `/new-post/${item._id}`
-              }
-              passHref
-              key={item._id}
-              className="mt-4 px-8 pt-6 pb-2 flex flex-col gap-1"
-            >
-              <h2 className="text-sm font-bold">{item.title}</h2>
-              <p className="text-sm text-zinc-500 truncate max-w-md">
-                {item.shortDescription}
-              </p>
-              <p className="mt-3 text-xs text-zinc-500">
-                {value === "drafts" ? "Saved" : "Published"}{" "}
-                {moment(item.createdAt).fromNow()}
-              </p>
-            </Link>
+            <div key={item._id}>
+              <Link
+                href={
+                  value === "published"
+                    ? `/post/${item.slug}?id=${item._id}`
+                    : `/new-post/${item._id}`
+                }
+                passHref
+                className="mt-4 px-8 pt-6 pb-2 flex flex-col gap-1"
+              >
+                <h2 className="text-sm font-bold">{item.title}</h2>
+                <p className="text-sm text-zinc-500 truncate max-w-md">
+                  {item.shortDescription}
+                </p>
+                <p className="mt-3 text-xs text-zinc-500">
+                  {value === "drafts" ? "Saved" : "Published"}{" "}
+                  {moment(item.createdAt).fromNow()}
+                </p>
+              </Link>
+
+              <div className="border-t border-zinc-200 my-4" />
+            </div>
           ))}
         </>
       )}

@@ -79,7 +79,7 @@ export async function getPostById(id: string) {
   try {
     const post = await Post.findById(id).populate(
       "authorId",
-      "name profilePicture"
+      "name email profilePicture"
     );
 
     if (!post) {
@@ -99,7 +99,7 @@ export async function getDraftPosts(authorId: string) {
 
   try {
     const posts = await Post.find({ authorId, status: "draft" })
-      .populate("authorId", "name profilePicture")
+      .populate("authorId", "name email profilePicture")
       .sort({ createdAt: -1 });
 
     return JSON.parse(JSON.stringify(posts));
@@ -114,7 +114,7 @@ export async function getPublishedPosts(authorId: string) {
 
   try {
     const posts = await Post.find({ authorId, status: "published" })
-      .populate("authorId", "name profilePicture")
+      .populate("authorId", "name email profilePicture")
       .sort({ createdAt: -1 });
 
     return JSON.parse(JSON.stringify(posts));
@@ -129,7 +129,7 @@ export async function getAllPosts() {
 
   try {
     const posts = await Post.find({ status: "published" })
-      .populate("authorId", "name profilePicture")
+      .populate("authorId", "name email profilePicture")
       .sort({ createdAt: -1 });
 
     return JSON.parse(JSON.stringify(posts));

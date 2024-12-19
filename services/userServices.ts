@@ -21,6 +21,19 @@ export async function saveNewUser(user: TypeUser) {
   }
 }
 
+export async function getUserById(id: string) {
+  await connectDB();
+
+  const user = await User.findById(id);
+
+  if (!user) {
+    console.error("User not found");
+    return;
+  }
+
+  return user;
+}
+
 export async function getUserByEmail(email: string) {
   await connectDB();
 

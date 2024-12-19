@@ -5,22 +5,27 @@ import { HeartIcon, MessageCircleIcon } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import UserAvatar from "@/components/user-avatar";
 
-const PostItem = ({ post }: { post: PostDoc }) => {
+const PostItem = ({
+  post,
+  showAuthor = true,
+}: {
+  post: PostDoc;
+  showAuthor?: boolean;
+}) => {
   return (
     <Link href={`/post/${post.slug}?id=${post._id}`} passHref>
-      <div className="flex items-center gap-2 mb-4">
-        <UserAvatar
-          src={post.authorId.profilePicture || "https://github.com/shadcn.png"}
-          className="size-6"
-        />
-        <p className="text-xs font-medium">{post.authorId.name}</p>
-      </div>
+      {showAuthor && (
+        <div className="flex items-center gap-2 mb-4">
+          <UserAvatar src={post.authorId.profilePicture} className="size-6" />
+          <p className="text-xs font-medium">{post.authorId.name}</p>
+        </div>
+      )}
 
-      <div className="flex justify-between max-w-3xl">
+      <div className="flex justify-between w-full">
         <div className="flex flex-col gap-2 justify-between">
           <div className="flex flex-col">
             <h2 className="text-lg lg:text-2xl font-bold">{post.title}</h2>
-            <p className="text-muted-foreground text-xs lg:text-sm lg:max-w-lg">
+            <p className="text-muted-foreground text-xs lg:text-sm">
               {post.shortDescription}
             </p>
           </div>
