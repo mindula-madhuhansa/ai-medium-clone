@@ -16,6 +16,8 @@ type PostDoc = {
   createdAt: string;
   updatedAt: string;
   slug: string;
+  likesCount: number;
+  commentsCount: number;
 };
 
 type Post = {

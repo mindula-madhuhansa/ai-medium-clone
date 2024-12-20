@@ -10,6 +10,8 @@ export interface IPost extends Document {
   imagePrompt?: string;
   imageUrl?: string;
   status: "draft" | "published";
+  likesCount: number;
+  commentsCount: number;
 }
 
 const PostSchema: Schema = new Schema(
@@ -26,6 +28,8 @@ const PostSchema: Schema = new Schema(
       enum: ["draft", "published"],
       default: "draft",
     },
+    likesCount: { type: Number, default: 0 },
+    commentsCount: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

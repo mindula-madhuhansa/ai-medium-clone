@@ -1,21 +1,40 @@
+import Link from "next/link";
 import Image from "next/image";
 import Markdown from "react-markdown";
 import { redirect } from "next/navigation";
-import { HeartIcon, MessageCircleIcon, ShareIcon } from "lucide-react";
+import { MessageCircleIcon, ShareIcon } from "lucide-react";
 
 import { formatDate } from "@/lib/utils";
 import UserAvatar from "@/components/user-avatar";
 import CommentBox from "@/components/comment-box";
-import { getPostById } from "@/services/postServices";
-import Link from "next/link";
+import LikeButton from "@/components/like-button";
+import { currentUser } from "@clerk/nextjs/server";
+import { getLikeCount } from "@/services/likeServices";
+import { getUserByEmail } from "@/services/userServices";
+import { getPostBySlug } from "@/services/postServices";
 
 export default async function PostPage({
-  searchParams,
+  params,
 }: {
-  searchParams: Promise<{ id: string }>;
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = await searchParams;
-  const post: PostDoc = await getPostById(id);
+  const clerkUser = await currentUser();
+
+  if (!clerkUser) {
+    return redirect("/sign-in");
+  }
+
+  const user = await getUserByEmail(
+    clerkUser.primaryEmailAddress?.emailAddress as string
+  );
+
+  const { id } = await params;
+  console.log("slug", id);
+
+  const post: PostDoc = await getPostBySlug(id);
+
+  let likesCount = 0;
+  likesCount = await getLikeCount(post._id);
 
   if (post.status !== "published") {
     return redirect("/");
@@ -60,10 +79,11 @@ export default async function PostPage({
       </div>
 
       <div className="flex items-center gap-6 text-zinc-600 text-sm my-12">
-        <div className="flex items-center gap-2">
-          <HeartIcon className="size-5" />
-          <p>0</p>
-        </div>
+        <LikeButton
+          userId={user.id}
+          postId={post._id}
+          likesCount={likesCount}
+        />
 
         <div className="flex items-center gap-2">
           <MessageCircleIcon className="size-5" />

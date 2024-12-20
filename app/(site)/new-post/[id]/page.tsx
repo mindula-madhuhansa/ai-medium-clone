@@ -37,7 +37,7 @@ export default async function EditPostPage({
           action={async () => {
             "use server";
             await updatePostStatus(id, "published");
-            redirect(`/post/${post.slug}?id=${post._id}`);
+            redirect(`/post/${post.slug}`);
           }}
         >
           <Button className="bg-green-500 hover:bg-green-500/90">

@@ -1,7 +1,7 @@
 import moment from "moment";
+import Link from "next/link";
 
 import { TabsContent } from "@/components/ui/tabs";
-import Link from "next/link";
 
 const TabContent = ({ value, items }: { value: string; items: PostDoc[] }) => {
   return (

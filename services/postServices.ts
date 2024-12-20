@@ -94,6 +94,27 @@ export async function getPostById(id: string) {
   }
 }
 
+export async function getPostBySlug(slug: string) {
+  await connectDB();
+
+  try {
+    const post = await Post.findOne({ slug }).populate(
+      "authorId",
+      "name email profilePicture"
+    );
+
+    if (!post) {
+      console.error("Post not found");
+      return;
+    }
+
+    return JSON.parse(JSON.stringify(post));
+  } catch (error) {
+    console.error("Error getting post by slug:", error);
+    return;
+  }
+}
+
 export async function getDraftPosts(authorId: string) {
   await connectDB();
 

@@ -22,10 +22,19 @@ export default async function Dashboard({
 
   if (user?.primaryEmailAddress?.emailAddress !== author.email) {
     return (
-      <div className="flex justify-between">
+      <div className="flex flex-col lg:flex-row lg:justify-between lg:gap-8">
         <div>
-          <h2 className="mt-8 mb-12 text-5xl font-bold">{author.name}</h2>
-          {publishedPosts.map((post) => (
+          <div className="flex flex-col lg:hidden items-center">
+            <UserAvatar src={author.profilePicture} className="size-32" />
+            <h2 className="mt-8 mb-12 text-3xl font-bold">{author.name}</h2>
+            <div className="border-t border-zinc-200 my-4" />
+          </div>
+
+          <h2 className="hidden lg:inline-flex mt-8 mb-12 text-5xl font-bold">
+            {author.name}
+          </h2>
+
+          {publishedPosts.map((post: PostDoc) => (
             <div key={post._id} className="mb-8">
               <PostItem post={post} showAuthor={false} />
 
@@ -33,9 +42,10 @@ export default async function Dashboard({
             </div>
           ))}
         </div>
-        <div className="flex flex-col border-l border-zinc-200 pl-16">
+
+        <div className="hidden lg:flex flex-col border-l border-zinc-200 lg:pl-8">
           <UserAvatar src={author.profilePicture} className="size-32" />
-          <h3 className="mt-8 text-lg font-semibold">{author.name}</h3>
+          <h3 className="mt-4 font-semibold">{author.name}</h3>
         </div>
       </div>
     );

@@ -4,16 +4,20 @@ import { HeartIcon, MessageCircleIcon } from "lucide-react";
 
 import { formatDate } from "@/lib/utils";
 import UserAvatar from "@/components/user-avatar";
+import { getLikeCount } from "@/services/likeServices";
 
-const PostItem = ({
+const PostItem = async ({
   post,
   showAuthor = true,
 }: {
   post: PostDoc;
   showAuthor?: boolean;
 }) => {
+  let likesCount = 0;
+  likesCount = await getLikeCount(post._id);
+
   return (
-    <Link href={`/post/${post.slug}?id=${post._id}`} passHref>
+    <Link href={`/post/${post.slug}`} passHref>
       {showAuthor && (
         <div className="flex items-center gap-2 mb-4">
           <UserAvatar src={post.authorId.profilePicture} className="size-6" />
@@ -35,7 +39,7 @@ const PostItem = ({
 
             <div className="flex items-center gap-2">
               <HeartIcon className="size-4" />
-              <p>0</p>
+              <p>{likesCount}</p>
             </div>
 
             <div className="flex items-center gap-2">
